@@ -1,0 +1,37 @@
+olimar    ansible_host=192.168.1.150
+louis     ansible_host=192.168.1.151
+brittany  ansible_host=192.168.1.152
+charlie   ansible_host=192.168.1.153
+charlie-1 ansible_host=192.168.1.154
+
+[all:vars]
+ansible_user=service-manager
+
+[debian]
+olimar
+louis
+brittany
+charlie
+charlie-1
+
+[webservers]
+brittany
+
+[dbservers]
+louis
+
+[gameservers]
+charlie-1
+
+[computenodes]
+charlie
+charlie-1
+
+[masternodes]
+olimar
+
+[workernodes]
+louis
+brittany
+charlie
+charlie-1
