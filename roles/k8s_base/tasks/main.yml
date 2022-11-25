@@ -1,0 +1,5 @@
+---
+---
+- name: "K8s Base"
+  debug:
+    msg: "Running k8s base"

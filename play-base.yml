@@ -1,0 +1,10 @@
+---
+- hosts: all
+  roles:
+    - base
+    - docker_base
+    - k8s_base
+
+- hosts: webservers
+  roles:
+    - nginx_base

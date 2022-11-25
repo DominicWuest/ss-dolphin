@@ -1,0 +1,4 @@
+---
+- name: "Docker Base"
+  debug:
+    msg: "Running Docker base"
