@@ -3,13 +3,13 @@
   roles:
     - locale
     - timezone
-    - ssh_base
+    - ssh_setup
 
 - hosts: kubernetesnodes
   roles:
-    - docker_base
-    - k8s_base
+    - docker_setup
+    - k8s_setup
 
 - hosts: webservers
   roles:
-    - nginx_base
+    - nginx_setup
