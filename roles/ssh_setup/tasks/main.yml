@@ -1,21 +1,11 @@
 ---
-- name: "Setup SSH"
-  block:
-    - name: "Copy SSH config"
-      become: true
-      copy:
-        src: "sshd_config"
-        dest: "/etc/ssh/sshd_config"
-        owner: root
-        group: root
-        mode: "0644"
-    
-    - name: "Add authorized keys"
-      authorized_key:
-        key: "{{ lookup('file', item) }}"
-        user: "{{ ansible_user_id }}"
-        state: present
-      loop: "{{ query('fileglob', 'keys/*') }}"
-
+- name: "Copy SSH config"
+  become: true
+  copy:
+    src: "sshd_config"
+    dest: "/etc/ssh/sshd_config"
+    owner: root
+    group: root
+    mode: "0644"
   notify:
     - "Restart sshd"

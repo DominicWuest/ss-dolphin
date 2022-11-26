@@ -1,0 +1,7 @@
+---
+- name: "Add authorized SSH keys"
+  authorized_key:
+    key: "{{ lookup('file', item) }}"
+    user: "{{ ansible_user_id }}"
+    state: present
+  loop: "{{ query('fileglob', '*') }}"
