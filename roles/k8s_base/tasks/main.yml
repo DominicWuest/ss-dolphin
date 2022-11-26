@@ -1,5 +1,40 @@
 ---
----
-- name: "K8s Base"
-  debug:
-    msg: "Running k8s base"
+- name: "Setup k8s (kubelet, kubeadm, kubectl)"
+  become: true
+  block:
+    - name: "Install k8s install dependencies"
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+        state: present
+
+    - name: "Add k8s GPG key"
+      apt_key:
+        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        keyring: /etc/apt/trusted.gpg.d/kubernetes.gpg
+        state: present
+
+    - name: "Add k8s repository"
+      apt_repository:
+        update_cache: true
+        repo: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes.gpg] https://apt.kubernetes.io/ kubernetes-xenial main"
+        state: present
+
+    - name: "Install k8s packages"
+      apt:
+        name:
+          - kubelet
+          - kubeadm
+          - kubectl
+        state: present
+
+    - name: "Pin k8s package versions"
+      dpkg_selections:
+        name: "{{ item }}"
+        selection: hold
+      loop:
+        - kubelet
+        - kubeadm
+        - kubectl
