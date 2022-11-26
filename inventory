@@ -35,3 +35,7 @@ louis
 brittany
 charlie
 charlie-1
+
+[kubernetesnodes:children]
+masternodes
+workernodes
