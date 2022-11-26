@@ -1,4 +1,0 @@
----
-- name: "Base"
-  debug:
-    msg: "Running Base"
