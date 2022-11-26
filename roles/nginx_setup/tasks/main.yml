@@ -1,4 +1,14 @@
 ---
-- name: "Nginx Base"
-  debug:
-    msg: "Running nginx base"
+- name: "Setup nginx"
+  become: true
+  block:
+    - name: "Install nginx"
+      apt:
+        name: "nginx"
+        state: present
+    
+    - name: "Ensure the nginx daemon is running"
+      service:
+        name: "nginx"
+        enabled: true
+        state: started
