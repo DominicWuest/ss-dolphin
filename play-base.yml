@@ -3,6 +3,7 @@
   roles:
     - locale
     - timezone
+    - ssh_base
 
 - hosts: kubernetesnodes
   roles:
