@@ -1,0 +1,21 @@
+---
+- name: "Setup Minecraft"
+  become: true
+  block:
+    - name: "Install Minecraft dependencies"
+      apt:
+        name: openjdk-17-jre-headless
+        state: present
+      
+    - name: "Add Minecraft target file"
+      copy:
+        src: "minecraft-servers.target"
+        dest: "/etc/systemd/system/minecraft-servers.target"
+        owner: root
+        group: root
+        mode: "0644"
+    
+    - name: "Ensure the Minecraft servers target is enabled"
+      service:
+        name: "minecraft-servers.target"
+        enabled: true
