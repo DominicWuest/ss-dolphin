@@ -1,0 +1,6 @@
+---
+- hosts: gameservers
+  roles:
+    # Sets up the minecraft servers and enables active ones
+    - name: minecraft_server_setup
+      tags: minecraft_server_setup
