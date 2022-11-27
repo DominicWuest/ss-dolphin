@@ -4,5 +4,6 @@
     # Updates and upgrades all apt packages
     - name: update_all
       tags: update_all
+    # Adds authorized ssh keys
     - name: ssh_keys
       tags: ssh_keys
