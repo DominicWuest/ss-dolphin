@@ -13,7 +13,3 @@
 - hosts: webservers
   roles:
     - nginx_setup
-
-- hosts: gameservers
-  roles:
-    - minecraft_setup
