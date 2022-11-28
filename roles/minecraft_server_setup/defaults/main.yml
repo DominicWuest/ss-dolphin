@@ -1,0 +1,93 @@
+# Data of accounts that should always be OPs
+default_server_ops:
+  - uuid: "8907d943-5757-4e75-b7ea-65154097e3ea"
+    name: "MLGranny"
+    level: 4
+    bypassesPlayerLimit: true
+
+# Data of accounts that should always be whitelisted
+default_server_whitelist:
+  - uuid: "8907d943-5757-4e75-b7ea-65154097e3ea"
+    name: "MLGranny"
+
+# Format:
+# 
+# - name: string # Name of the server, used to identify its service and directory
+#   server_enabled: boolean # Whether the server is enabled and should be running
+#   server_executable_url: url # The url where the server executable can be downloaded from
+#   pre_script: string # The script that is executed before the server is started, useful for installing dependencies
+#   startup_script: string # The script that is run in order to start up the server
+#   stop_script: string # The script that is run when the server is stopped
+#   success_exit_code: int # The return code indicating correct stopping of the program (143 for jars, 130 for FTB).
+#   server_motd: string # The message that is displayed to users on the server list in Minecraft. Default 'A Minecraft Server'
+#   server_world_seed: string # The seed for generating the Minecraft world, has no effect after the first startup. Default ''
+#   server_level_type: string # The type of the server level (normal, flat, amplified, etc), usually minecraft\:normal, might differ for modpacks. Default: minecraft\:normal
+#   server_gamemode: int # The gamemode of the server [0: survival, 1: creative, 2: adventure, 3: spectator]. Default: 0
+#   server_difficulty: int # The difficulty of the server [0: peaceful, 1: easy, 2: normal, 3: hard]. Default: 2
+#   server_player_capacity: int # The max amount of people that can be on the server at once. Default 10
+#   server_view_distance: int # The amount of chunks that should be considered around a player by the server. Default: 10
+#   server_port: int # The port this server should run on
+#   server_whitelist_enabled: boolean # Whether the whitelist is enabled on the server. Default: false
+#   server_ops: {uuid: string, name: string, level: int, bypassesPlayerLimit: boolean}[] # The  list of op's (admins) of the server. Default: []
+#   server_whitelist: {uuid: string, name: string}[] # The list of whitelisted users. Only relevant if server_whitelist_enabled = true. Default: []
+
+minecraft_servers: 
+  - name: "1.19.2_survival"
+    server_enabled: true
+    server_executable_url: "https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar"
+    server_executable_name: "server.jar"
+    pre_script: 
+    startup_script: "java -Xmx4096M -Xms4096M -jar server.jar nogui"
+    stop_script: 
+    success_exit_code: 143
+    server_motd: "Vanilla 1.19.2 Survival"
+    server_world_seed: 
+    server_level_type: "minecraft\\:normal"
+    server_gamemode: 0
+    server_difficulty: 2
+    server_player_capactiy: 10
+    server_view_distance: 10
+    server_port: 25565
+    server_whitelist_enabled: true
+    server_ops: 
+    server_whitelist: 
+
+  - name: "1.19.2_creative"
+    server_enabled: true
+    server_executable_url: "https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar"
+    server_executable_name: "server.jar"
+    pre_script: 
+    startup_script: "java -Xmx4096M -Xms4096M -jar server.jar nogui"
+    stop_script: 
+    success_exit_code: 143
+    server_motd: "Vanilla 1.19.2 Creative"
+    server_world_seed: 
+    server_level_type: "minecraft\\:flat"
+    server_gamemode: 1
+    server_difficulty: 2
+    server_player_capactiy: 10
+    server_view_distance: 10
+    server_port: 25566
+    server_whitelist_enabled: true
+    server_ops: 
+    server_whitelist: 
+
+  - name: "FTB_Infinity"
+    server_enabled: true
+    server_executable_url: "https://api.modpacks.ch/public/modpack/23/99/server/linux"
+    server_executable_name: "serverinstall_23_99"
+    pre_script: "./serverinstall_23_99 --auto"
+    startup_script: "./start.sh"
+    stop_script: 
+    success_exit_code: 143
+    server_motd: "FTB Infinity Survival"
+    server_world_seed: 
+    server_level_type: "DEFAULT"
+    server_gamemode: 0
+    server_difficulty: 2
+    server_player_capactiy: 10
+    server_view_distance: 10
+    server_port: 25567
+    server_whitelist_enabled: true
+    server_ops: 
+    server_whitelist: 

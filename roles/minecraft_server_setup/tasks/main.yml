@@ -19,3 +19,12 @@
       service:
         name: "minecraft-servers.target"
         enabled: true
+
+    - name: "Ensure Minecraft folder exists"
+      file:
+        path: "/opt/minecraft"
+        state: "directory"
+  
+- name: "Create available Minecraft servers"
+  include_tasks: "create_minecraft_server.yml"
+  loop: "{{ minecraft_servers }}"

@@ -1,0 +1,62 @@
+---
+# We need to revoke write permissions on most files as otherwise Minecraft itself changes the file on startup
+- name: "{{ item.name }}: Ensure the server's directory exists"
+  become: true
+  file:
+    path: "/opt/minecraft/{{ item.name }}"
+    owner: "{{ ansible_user_id }}"
+    state: "directory"
+
+- name: "Accept the EULA for the server"
+  copy:
+    src: "eula.txt"
+    dest: "/opt/minecraft/{{ item.name }}"
+    owner: "{{ ansible_user_id }}"
+    mode: "0444"
+
+- name: "Add the server properties"
+  template:
+    src: "server.properties.j2"
+    dest: "/opt/minecraft/{{ item.name }}/server.properties"
+    mode: "0444"
+
+- name: "Add the default and server-specific OPs"
+  copy:
+    content: "{{ ((default_server_ops | default([], true)) + (item.server_ops | default([], true)) ) | to_nice_json }}"
+    dest: "/opt/minecraft/{{ item.name }}/ops.json"
+    mode: "0444"
+
+- name: "Add default and server-specific whitelisted users if whitelist is enabled"
+  copy:
+    content: "{{ ((default_server_whitelist | default([], true)) + (item.server_whitelist | default([], true))) | to_nice_json }}"
+    dest: "/opt/minecraft/{{ item.name }}/whitelist.json"
+    mode: "0444"
+  when: "item.server_whitelist_enabled"
+
+- name: "Download the server executable"
+  get_url:
+    url: "{{ item.server_executable_url }}"
+    dest: "/opt/minecraft/{{ item.name }}/{{ item.server_executable_name }}"
+    mode: "0744"
+
+- name: "Create a service file for the server"
+  become: true
+  template:
+    src: "minecraft-server.service.j2"
+    dest: "/etc/systemd/system/minecraft-server-{{ item.name }}.service"
+
+- name: "Enable and start the service if the server is enabled"
+  become: true
+  service:
+    name: "minecraft-server-{{ item.name }}"
+    state: "started"
+    enabled: true
+  when: "item.server_enabled"
+
+- name: "Disable and stop the service if the server is not enabled"
+  become: true
+  service:
+    name: "minecraft-server-{{ item.name }}"
+    state: "stopped"
+    enabled: false
+  when: "not item.server_enabled"
