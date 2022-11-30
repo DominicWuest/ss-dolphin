@@ -6,7 +6,8 @@ User={{ ansible_user_id }}
 WorkingDirectory=/opt/minecraft/{{ item.name }}
 # Pass to bash in order to execute scripts relative to the working directory
 ExecStartPre=bash -c '{{ item.pre_script | default('', true) }}'
-ExecStart=bash -c '{{ item.startup_script }}'
+# Copy server.properties.template into server.properties s.t. server.properties.template stays consistent
+ExecStart=bash -c 'cp server.properties.template server.properties; {{ item.startup_script }}'
 ExecStop=bash -c '{{ item.stop_script | default('', true) }}'
 SuccessExitStatus={{ item.success_exit_code }}
 TimeoutSec=300

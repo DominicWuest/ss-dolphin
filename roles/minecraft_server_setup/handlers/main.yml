@@ -1,0 +1,13 @@
+---
+- name: "Reload Systemd Daemon"
+  become: true
+  systemd:
+    daemon_reload: true
+
+# Restarts the server if needed
+- name: "Restart Server"
+  become: true
+  service:
+    name: "minecraft-server-{{ cur_server.name }}"
+    state: "restarted"
+  when: cur_server.server_enabled
