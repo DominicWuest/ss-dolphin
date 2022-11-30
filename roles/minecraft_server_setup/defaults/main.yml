@@ -1,3 +1,6 @@
+# Domain under which the servers will be hosted
+minecraft_domain: "{{ main_domain }}"
+
 # Data of accounts that should always be OPs
 default_server_ops:
   - uuid: "8907d943-5757-4e75-b7ea-65154097e3ea"
@@ -13,6 +16,7 @@ default_server_whitelist:
 # Format:
 # 
 # - name: string # Name of the server, used to identify its service and directory
+#   subdomain: string # subdomain under which the server should be accessible
 #   server_enabled: boolean # Whether the server is enabled and should be running
 #   server_executable_url: url # The url where the server executable can be downloaded from
 #   pre_script: string # The script that is executed before the server is started, useful for installing dependencies
@@ -33,6 +37,7 @@ default_server_whitelist:
 
 minecraft_servers: 
   - name: "1.19.2_survival"
+    subdomain: "s19"
     server_enabled: true
     server_executable_url: "https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar"
     server_executable_name: "server.jar"
@@ -47,12 +52,13 @@ minecraft_servers:
     server_difficulty: 2
     server_player_capactiy: 10
     server_view_distance: 10
-    server_port: 25565
+    server_port: 25566
     server_whitelist_enabled: true
     server_ops: 
     server_whitelist: 
 
   - name: "1.19.2_creative"
+    subdomain: "c19"
     server_enabled: true
     server_executable_url: "https://piston-data.mojang.com/v1/objects/f69c284232d7c7580bd89a5a4931c3581eae1378/server.jar"
     server_executable_name: "server.jar"
@@ -67,12 +73,13 @@ minecraft_servers:
     server_difficulty: 2
     server_player_capactiy: 10
     server_view_distance: 10
-    server_port: 25566
+    server_port: 25567
     server_whitelist_enabled: true
     server_ops: 
     server_whitelist: 
 
   - name: "FTB_Infinity"
+    subdomain: "ftbi"
     server_enabled: true
     server_executable_url: "https://api.modpacks.ch/public/modpack/23/99/server/linux"
     server_executable_name: "serverinstall_23_99"
@@ -87,7 +94,7 @@ minecraft_servers:
     server_difficulty: 2
     server_player_capactiy: 10
     server_view_distance: 10
-    server_port: 25567
+    server_port: 25568
     server_whitelist_enabled: true
     server_ops: 
     server_whitelist: 

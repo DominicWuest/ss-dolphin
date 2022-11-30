@@ -6,7 +6,7 @@
   set_fact:
     cur_server: "{{ item }}"
 
-- name: "{{ item.name }}: Ensure the server's directory exists"
+- name: "Ensure the server's directory exists"
   become: true
   file:
     path: "/opt/minecraft/{{ item.name }}"

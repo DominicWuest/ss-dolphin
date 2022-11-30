@@ -1,0 +1,9 @@
+[Unit]
+Description=Minecraft Reverse Proxy Service
+
+[Service]
+User={{ ansible_user_id }}
+ExecStart=mc-router -mapping={{ mapping }}
+
+[Install]
+WantedBy=minecraft.target

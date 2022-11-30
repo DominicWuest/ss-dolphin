@@ -4,10 +4,16 @@
   systemd:
     daemon_reload: true
 
-# Restarts the server if needed
+# Restarts the Minecraft server if needed
 - name: "Restart Server"
   become: true
   service:
     name: "minecraft-server-{{ cur_server.name }}"
     state: "restarted"
   when: cur_server.server_enabled
+
+- name: "Restart mc-router"
+  become: true
+  service:
+    name: "mc-router"
+    state: "restarted"

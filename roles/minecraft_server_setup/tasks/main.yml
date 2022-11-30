@@ -25,6 +25,37 @@
         path: "/opt/minecraft"
         state: "directory"
   
-- name: "Create available Minecraft servers"
-  include_tasks: "create_minecraft_server.yml"
-  loop: "{{ minecraft_servers }}"
+    - name: "Create available Minecraft servers"
+      include_tasks: "create_minecraft_server.yml"
+      loop: "{{ minecraft_servers }}"
+
+    - name: "Download and install the mc-router binary"
+      unarchive:
+        remote_src: true
+        include: mc-router
+        src: "https://github.com/itzg/mc-router/releases/download/1.17.1/mc-router_1.17.1_linux_amd64.tar.gz"
+        dest: "/usr/local/bin"  
+        mode: "0755"
+        owner: "root"
+
+      # subdomain1.main_domain=127.0.0.1:server_port1,subdomain2:main_domain=127.0.0.1:server_port2 ...
+    - name: "Create mapping string for mc-router"
+      set_fact:
+        mapping: "{{ ( mapping | default('') ) + ( item.subdomain + '.' + minecraft_domain + '=127.0.0.1:' + ( item.server_port | string ) + ',' ) }}"
+      loop: "{{ minecraft_servers }}"
+
+    - name: "Remove trailing comma of mc-router mapping string"
+      set_fact:
+        mapping: "{{ mapping[:-1] }}"
+
+    - name: "Add the mc-router service file"
+      template:
+        src: "mc-router.service.j2"
+        dest: "/etc/systemd/system/mc-router.service"
+      notify: "Restart mc-router"
+
+    - name: "Ensure mc-router is enabled and running"
+      service:
+        name: "mc-router"
+        enabled: true
+        state: "started"
