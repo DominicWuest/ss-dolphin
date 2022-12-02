@@ -38,3 +38,15 @@
         - kubelet
         - kubeadm
         - kubectl
+    
+    - name: "Ensure systemd-resolved is enabled and running"
+      service:
+        name: "systemd-resolved"
+        enabled: true
+        state: "started"
+    
+    - name: "Export KUBECONFIG for root"
+      lineinfile:
+        path: "/root/.profile"
+        line: 'export KUBECONFIG="/etc/kubernetes/kubelet.conf"'
+        state: present

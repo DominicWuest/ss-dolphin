@@ -1,0 +1,14 @@
+---
+- name: "Join the cluster if not already part of it"
+  become: true
+  become_flags: "--login" # Otherwise KUBECONFIG won't be considered
+  block:
+    - name: "Check if this node is already part of a cluster"
+      shell: "kubectl cluster-info"
+      changed_when: false
+      failed_when: false
+      register: is_worker
+    
+    - name: "Join the cluster if needed"
+      shell: "{{ hostvars.k8s_master.join_command }}"
+      when: is_worker.rc != 0

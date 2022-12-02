@@ -1,0 +1,10 @@
+---
+- hosts: masternodes
+  roles:
+    - name: setup_k8s_masternodes
+      tags: setup_cluster
+
+- hosts: workernodes
+  roles:
+    - name: setup_k8s_workernodes
+      tags: setup_cluster

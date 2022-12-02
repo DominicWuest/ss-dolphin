@@ -1,0 +1,29 @@
+---
+- name: "Init the cluster if it hasn't been initialized yet"
+  become: true
+  become_flags: "--login" # Otherwise KUBECONFIG won't be considered
+  block:
+    - name: "Check if this cluster is already initialized"
+      shell: "kubectl cluster-info"
+      changed_when: false
+      failed_when: false
+      register: is_inited
+    
+    - name: "Init the cluster if needed"
+      when: is_inited.rc != 0
+      block: 
+        - name: "TODO"
+          debug:
+            msg: "Not implemented yet"
+
+- name: "Create join token for worker nodes"
+  become: true
+  shell: "kubeadm token create --ttl 1h --print-join-command"
+  changed_when: false
+  register: join_command
+
+- name: "Add join token to in-memory inventory"
+  add_host:
+    hostname: k8s_master
+    join_command: "{{ join_command.stdout }}"
+  changed_when: false
