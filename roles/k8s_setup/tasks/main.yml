@@ -12,7 +12,7 @@
 
     - name: "Add k8s GPG key"
       apt_key:
-        url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+        url: https://dl.k8s.io/apt/doc/apt-key.gpg
         keyring: /etc/apt/trusted.gpg.d/kubernetes.gpg
         state: present
 

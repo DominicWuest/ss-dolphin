@@ -1,7 +1,12 @@
 ---
+- name: "Create keys string"
+  set_fact:
+    key: "{{ ( key | default('') ) + ( lookup('file', item) + '\n' ) }}"
+  loop: "{{ query('fileglob', '*' )}}"
+
 - name: "Add authorized SSH keys"
   authorized_key:
-    key: "{{ lookup('file', item) }}"
+    key: "{{ key }}"
     user: "{{ ansible_user_id }}"
     state: present
-  loop: "{{ query('fileglob', '*') }}"
+    exclusive: true
