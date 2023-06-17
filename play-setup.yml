@@ -1,15 +1,43 @@
 ---
-- hosts: all
+- name: "Run base setup of servers"
+  hosts: all
   roles:
     - locale
     - timezone
     - ssh_setup
+  tags:
+    - never
+    - base
 
-- hosts: kubernetesnodes
+- name: "Run setup of kubernetes nodes"
+  hosts: kubernetesnodes
   roles:
     - docker_setup
     - k8s_setup
+  tags:
+    - never
+    - k8s
 
-- hosts: webservers
+- name: "Run setup of web servers"
+  hosts: webservers
   roles:
     - nginx_setup
+  tags:
+    - never
+    - webservers
+
+- name: "Run setup of game servers"
+  hosts: gameservers
+  roles:
+    - name: minecraft_server_setup
+  tags:
+    - never
+    - gameservers
+
+- name: "Run setup of media servers"
+  hosts: mediaservers
+  roles:
+    - name: plex_media_server_setup
+  tags:
+    - never
+    - mediaservers

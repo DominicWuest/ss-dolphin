@@ -1,5 +1,0 @@
----
-- hosts: mediaservers
-  roles:
-    - name: plex_media_server_setup
-      tags: plex_media_server_setup
