@@ -1,0 +1,14 @@
+---
+- name: "Setup plex media server"
+  become: true
+  block:
+    - name: "Install plex media server"
+      apt:
+        deb: https://downloads.plex.tv/plex-media-server-new/1.32.3.7192-7aa441827/debian/plexmediaserver_1.32.3.7192-7aa441827_amd64.deb
+        state: present
+
+    - name: "Ensure plex media server is running"
+      service:
+        name: plexmediaserver
+        enabled: true
+        state: started

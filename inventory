@@ -23,6 +23,9 @@ louis
 [gameservers]
 charlie-1
 
+[mediaservers]
+charlie-1
+
 [computenodes]
 charlie
 charlie-1
